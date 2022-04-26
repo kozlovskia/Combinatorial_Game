@@ -3,7 +3,7 @@ from pathlib import Path
 
 import utils
 from environment import Game
-from monte_carlo import MonteCarlo, Node
+from agents import MonteCarlo, Node, heuristic_best_move
 
 
 def parse_args():
@@ -16,7 +16,7 @@ def parse_args():
                               ' Default -1 finds first free integer to save'))
     
     parser.add_argument('-a', '--agent', type=str, default='MonteCarlo', 
-                        help='Name of enemy agent. One of: MonteCarlo')
+                        help='Name of enemy agent. One of: MonteCarlo | Heuristic')
     parser.add_argument('--simulations', type=int, default=1000, help='MC simulation amount')
 
     parser.add_argument('-n', type=int, default=8, help='Max number of tokens to be placed.')
@@ -55,6 +55,12 @@ def main(args):
             agent_move, agent_win_prob = agent.make_choice()
             agent_win_prob *= 100
             print(f'Agent calculated his win probability to be {round(agent_win_prob, 2)}%.')
+            print(f'Agent inserts {agent_move}')
+            game.move_player_2(agent_move)
+
+        elif args.agent == 'Heuristic':
+            print('Agent is thinking...')
+            agent_move = heuristic_best_move(game)
             print(f'Agent inserts {agent_move}')
             game.move_player_2(agent_move)
 

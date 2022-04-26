@@ -72,6 +72,3 @@ def move_correctness(move, max_move):
     if move < 0 or move > max_move:
         return False
     return True
-
-
-print(is_color_terminal([1, 0, 1, 2, 1, 0], 1, 3))

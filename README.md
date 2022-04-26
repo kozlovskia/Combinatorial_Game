@@ -5,7 +5,7 @@ Python 3.8.10 was used to develop this program.
 
 To install required packages run:
 ```bash
-pip install -r requrements.txt
+pip install -r requirements.txt
 ```
 
 ## Running

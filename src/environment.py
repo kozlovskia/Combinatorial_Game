@@ -11,7 +11,6 @@ class Game:
 
         self.state = state
 
-
     def move_player_1(self, position):
         self.state = [*self.state[:position], -1, *self.state[position:]]
 

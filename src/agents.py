@@ -1,7 +1,8 @@
 import random
 from collections import defaultdict
 from math import sqrt, log
-from unittest import result
+
+import numpy as np
 
 import utils
 from environment import Game
@@ -145,3 +146,28 @@ class MonteCarlo:
         best_move = scores.index(win_prob)
 
         return best_move, win_prob
+
+
+def heuristic_best_move(game):
+    current_state = game.state.copy()
+    possible_moves = []
+    for move in game.available_colors:
+        future_state = game.state.copy()
+        future_state[future_state.index(-1)] = move
+        is_terminal, _ = utils.is_color_terminal(future_state, move, game.sequence[move])
+        if not is_terminal:
+            possible_moves.append(move)
+
+    if not len(possible_moves):
+        return random.choice(game.available_colors)
+
+    current_state.remove(-1)
+    current_state = np.array(current_state)
+    unique, counts = np.unique(current_state, return_counts=True)
+    unique_with_counts = list(zip(unique, counts))
+    unused_moves = list(set(game.available_colors) - set(unique))
+    unique_with_counts.extend([(unused, 0) for unused in unused_moves])
+    unique_with_counts = [el for el in unique_with_counts if el[0] in possible_moves]
+
+    return min(unique_with_counts, key=lambda el: el[1])[0]
+    
