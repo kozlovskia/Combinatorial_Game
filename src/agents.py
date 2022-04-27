@@ -33,7 +33,7 @@ class Node(Game):
             if is_color_term:
                 result = 1
             
-        if len(self.state) >= 8 and result == 0:
+        if len(self.state) >= self.n and result == 0:
             result = -1
         
         self.terminal_result = result
