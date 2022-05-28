@@ -17,7 +17,7 @@ def parse_args():
     
     parser.add_argument('-a', '--agent', type=str, default='MonteCarlo', 
                         help='Name of enemy agent. One of: MonteCarlo | Heuristic')
-    parser.add_argument('--simulations', type=int, default=1000, help='MC simulation amount')
+    parser.add_argument('--simulations', type=int, default=100, help='MC simulation amount')
 
     parser.add_argument('-n', type=int, default=8, help='Max number of tokens to be placed.')
     parser.add_argument('-seq', nargs='*', type=int, help='Max amount of colors')
@@ -70,12 +70,12 @@ def main(args):
         res, which_terminal = game.result()
         if res in (-1, 1):
             running = False
-            game.present_state()
-            print('Reached terminal state.')
+            game.present_state(is_terminal=True)
             if res == 1:
-                print('You won')
+                print('You won, boxed tokens make arithmetic subsequence:')
+                utils.print_arithmetic_subseq(game.state, which_terminal)
             else:
-                print('Agent won')
+                print(f'Agent won -- {args.n} tokens has been placed.')
 
         logs = utils.write_one_state(logs, game.state)
 

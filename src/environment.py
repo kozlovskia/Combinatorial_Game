@@ -28,6 +28,22 @@ class Game:
 
         return 0, []
 
-    def present_state(self):
-        print('Current game state:\n' + ' '.join(list(map(str, self.state))))
-        print(f'Select place: min = 0, max = {len(self.state)}')
+    def present_state(self, is_terminal=False):
+        state_strs = list(map(str, self.state))
+        state_line = "__"
+        indices_line = "0 "
+        for i, el in enumerate(state_strs):
+            state_line += el
+            indices_line += len(el) * " "
+            state_line += "__"
+            indices_line += str(i + 1)
+            if len(str(i + 1)) == 1:
+                indices_line += " "
+        if is_terminal:
+            print("Terminal game state:")
+            print(state_line)
+        else:
+            print("Current game state:")
+            print(state_line)
+            print(indices_line)
+            print(f'Select place from indices above: min = 0, max = {len(self.state)}')

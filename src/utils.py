@@ -72,3 +72,30 @@ def move_correctness(move, max_move):
     if move < 0 or move > max_move:
         return False
     return True
+
+
+def print_arithmetic_subseq(state, terminal_indices):
+    state_strs = list(map(str, state))
+    top_line = ""
+    ret = ""
+    bot_line = ""
+    for i, el in enumerate(state_strs):
+        if i in terminal_indices:
+            top_line += " "
+            top_line += "_" * len(el)
+            top_line += " "
+            ret += f"|{el}|"
+            bot_line += " "
+            bot_line += "T" * len(el)
+            bot_line += " "
+        else:
+            top_line += " " * len(el)
+            ret += el
+            bot_line += " " * len(el)
+        top_line += " "
+        ret += " "
+        bot_line += " "
+
+    print(top_line)
+    print(ret)
+    print(bot_line)
